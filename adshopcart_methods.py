@@ -1,6 +1,5 @@
-############################################_START_OF_PROGRAM_#########################################################
 import datetime
-from advantage_shopping_cart import adshopcart_locators as locators
+import adshopcart_locators as locators
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
@@ -23,8 +22,7 @@ def setUp():
     # Checking/comparing the expected current URL address and the expected correct title:
     if driver.current_url == locators.asc_url and driver.title == '\xa0Advantage Shopping':
         print(f'Test Start at: {datetime.datetime.now()}')
-        print(f'We\'re at Advantage Shopping Cart homepage -- {driver.current_url} and {driver.title}')
-#       print(f'We\'re seeing title page -- {driver.title}')
+        print(f'We\'re at Advantage Shopping Cart homepage -- {driver.current_url} with title "{driver.title}" as expected.')
         print(f'We\'re seeing title logo -- Advantage Demo.')
 #       sleep(10)
 
@@ -43,10 +41,3 @@ def tearDown():
 
 setUp()
 tearDown()
-
-#################################################_END_OF_PROGRAM_######################################################
-
-
-
-
-
