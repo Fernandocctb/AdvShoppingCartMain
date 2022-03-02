@@ -1,8 +1,12 @@
+import sys
 import datetime
 import adshopcart_locators as locators
+from time import sleep
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.service import Service
-
+from selenium.webdriver.common.keys import Keys
 s = Service(executable_path='chromedriver.exe')
 
 driver = webdriver.Chrome(service=s)
@@ -37,7 +41,47 @@ def tearDown():
         print(f'----------------------------------------------')
         print(f'Test End at: {datetime.datetime.now()}')
         driver.close()
+        sleep(0.25)
         driver.quit()
 
+
+def signUP():
+    if driver.current_url == 'https://advantageonlineshopping.com/#/':
+        driver.find_element(By.ID, 'menuUser').click()
+        sleep(0.25)
+        assert driver.find_element(By.ID, 'menuUser').is_displayed()
+        sleep(0.25)
+        driver.find_element(By.LINK_TEXT, 'CREATE NEW ACCOUNT').click()
+        sleep(.1)
+        if driver.current_url == 'https://advantageonlineshopping.com/#/register':
+            sleep(0.25)
+            driver.find_element(By.NAME, 'usernameRegisterPage').send_keys(locators.asc_username)
+            sleep(0.25)
+            driver.find_element(By.NAME, 'emailRegisterPage').send_keys(locators.asc_email)
+            sleep(0.25)
+            driver.find_element(By.NAME, 'passwordRegisterPage').send_keys(locators.asc_password)
+            sleep(0.25)
+            driver.find_element(By.NAME, 'confirm_passwordRegisterPage').send_keys(locators.asc_password)
+            sleep(0.25)
+            driver.find_element(By.NAME, 'i_agree').click()
+            sleep(0.50)
+            driver.find_element(By.ID, 'register_btnundefined').click()
+            sleep(2)
+
+def checkOut():
+            driver.find_element(By.XPATH, '//*[@id="menuUser"]').click()
+            sleep(5)
+#            driver.find_element(By.ID, "hrefUserIcon").click()
+#            sleep(.25)
+            assert driver.find_element(By.XPATH, '//*[@id="menuUser"]').is_displayed()
+            sleep(7)
+#            driver.find_element(By.CLASS_NAME, 'My_account').click()
+            driver.find_element(By.XPATH, '//span[contains(.,"hi-user")]').click()
+            sleep(5)
+#            driver.find_element(By.)
+
+
 setUp()
+signUP()
+checkOut()
 tearDown()
