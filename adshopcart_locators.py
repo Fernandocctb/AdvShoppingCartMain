@@ -4,9 +4,9 @@ fake = Faker(locale='en_CA')
 asc_url = 'https://advantageonlineshopping.com/#/'
 asc_create_url = 'https://advantageonlineshopping.com/#/register'
 asc_account_url = 'https://advantageonlineshopping.com/#/'
-asc_username = 'Shopaos8'
-asc_password = 'Myaos8'
-asc_email = 'fd8@gmail.com'
+asc_username = 'Shopaos9'
+asc_password = 'Myaos9'
+asc_email = 'fd9@gmail.com'
 username = fake.user_name()
 password = fake.password()
 email = fake.email()
@@ -18,6 +18,6 @@ country = fake.country()
 city = fake.city()
 address = fake.city()
 province = fake.province_abbr()
-postalcode = fake.postalcode
+postalcode = fake.postalcode()
 
-
+##########################################################_END_OF_LOCATORS_############################################
