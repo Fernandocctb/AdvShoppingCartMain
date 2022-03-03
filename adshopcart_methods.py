@@ -13,27 +13,20 @@ driver = webdriver.Chrome(service=s)
 
 # Defining set up:
 def setUp():
-
     # Maximize browser window after start:
     driver.maximize_window()
-
-    # Let's wait for the browser response in general:
+# Let's wait for the browser response in general:
     driver.implicitly_wait(30)
-
-    # Navigating to the Advantage Shopping Cart app website:
+# Navigating to the Advantage Shopping Cart app website:
     driver.get(locators.asc_url)
-
-    # Checking/comparing the expected current URL address and the expected correct title:
+# Checking/comparing the expected current URL address and the expected correct title:
     if driver.current_url == locators.asc_url and driver.title == '\xa0Advantage Shopping':
         print(f'Test Start at: {datetime.datetime.now()}')
         print(f'We\'re at Advantage Shopping Cart homepage -- {driver.current_url} with title "{driver.title}" as expected.')
         print(f'We\'re seeing title logo -- Advantage Demo.')
-
+        sleep(0.25)
     else:
         print(f'Opps! The driver current url is as expected but not quite the driver title!')
-        driver.close()
-        driver.quit()
-
 
 # Checking the homepage section:
 def check_homepage():
@@ -44,15 +37,15 @@ def check_homepage():
         print(f'This is unexpected, Check your code.')
     if driver.current_url == locators.asc_url:
         assert driver.find_element(By.ID, 'speakersTxt').is_displayed()
-        sleep(0.25)
+        sleep(0.15)
         assert driver.find_element(By.ID, 'tabletsTxt').is_displayed()
-        sleep(0.25)
+        sleep(0.15)
         assert driver.find_element(By.ID, 'headphonesTxt').is_displayed()
-        sleep(0.25)
+        sleep(0.15)
         assert driver.find_element(By.ID, 'laptopsTxt').is_displayed()
-        sleep(0.25)
+        sleep(0.15)
         assert driver.find_element(By.ID, 'miceTxt').is_displayed()
-        sleep(2)
+        sleep(0.25)
         print(f'You\'ve just checked SPEAKERS, TABLETS, HEADPHONES, LAPTOPS, MICE texts.')
         driver.find_element(By.LINK_TEXT, 'OUR PRODUCTS').click()
         print(f'Checked: OUR PRODUCTS.')
@@ -67,20 +60,20 @@ def check_homepage():
         print(f'Browsed: CONTACT US.')
         sleep(0.25)
 
-
 # Exploring Contact Us section:
 def check_contact_us():
     if driver.current_url == locators.asc_url:
         driver.find_element(By.LINK_TEXT, 'CONTACT US').click()
-        Select(driver.find_element(By.NAME, 'categoryListboxContactUs')).select_by_visible_text('Laptops')
+        Select(driver.find_element(By.XPATH, "//select[@name='categoryListboxContactUs']")).select_by_visible_text('Laptops')
         sleep(0.5)
-        Select(driver.find_element(By.XPATH, "//*[name='productListboxContactUs']")).select_by_visible_text('HP Chromebook 14 G1(ENERGY STAR)')
+        Select(driver.find_element(By.NAME, 'productListboxContactUs')).select_by_visible_text('HP Chromebook 14 G1(ENERGY STAR)')
         sleep(0.5)
         driver.find_element(By.NAME, 'emailContactUs').send_keys(locators.email)
         driver.find_element(By.NAME, 'subjectTextareaContactUs').send_keys(locators.subject)
         driver.find_element(By.ID, 'send_btnundefined').click()
-        print(f'Checked CONTACT US section!')
-
+        print(f'Checked: CONTACT US section!')
+        print(f'Checked: CONTINUE SHOPPING...')
+        sleep(2)
 
 # Creating a new Advantage Shopping Cart account:
 def register():
@@ -92,7 +85,7 @@ def register():
         sleep(1)
         if driver.current_url == locators.asc_create_url:
             assert driver.find_element(By.XPATH, '//h3[contains(.,"CREATE ACCOUNT")]').is_displayed()
-            print(f'Check: "CREATE NEW ACCOUNT"')
+            print(f'Checked: "CREATE NEW ACCOUNT"')
             sleep(0.25)
             driver.find_element(By.CSS_SELECTOR, "[name='usernameRegisterPage']").send_keys(locators.username)
             driver.find_element(By.CSS_SELECTOR, "[name='emailRegisterPage']").send_keys(locators.email)
@@ -112,7 +105,7 @@ def register():
             sleep(0.5)
             if driver.find_element(By.ID, 'menuUser').is_displayed():
                 print(f'User is created {locators.full_name} and {locators.email}')
-                sleep(3)
+                sleep(5)
             else:
                 print(f'User is not created. Check your code')
             driver.find_element(By.ID, "menuUser").click()
@@ -127,7 +120,6 @@ def register():
             sleep(0.25)
             print(f'Check: "NO ORDERS".')
             sleep(5)
-
 
 def log_out():
     driver.find_element(By.ID, "menuUser").click()
@@ -152,7 +144,6 @@ def log_in():
     else:
         print(f'Error message')
 
-
 def delete_user():
     driver.find_element(By.ID, "menuUser").click()
     sleep(1)
@@ -161,10 +152,9 @@ def delete_user():
     driver.find_element(By.CLASS_NAME, 'deleteBtnText').click()
     sleep(0.25)
     driver.find_element(By.XPATH, '//div[text()="yes"]').click()
-    sleep(5)
+    sleep(2)
     print(f'Check: "DELETE ACCOUNT" for {locators.username}')
     sleep(5)
-
 
 def login_with_deleted_cred():
     driver.find_element(By.ID, "menuUser").click()
@@ -178,7 +168,6 @@ def login_with_deleted_cred():
     else:
         print(f'Check: Account Validated.')
 
-
 # Defining teardown if driver is working and not None:
 def tearDown():
     if driver is not None:
@@ -188,18 +177,17 @@ def tearDown():
         sleep(0.25)
         driver.quit()
 
-
-# Calls section:
+'''
+#Create a new user Test Case:
 setUp()
 register()
 log_out()
 log_in()
 check_homepage()
 check_contact_us()
-log_out()
 delete_user()
 login_with_deleted_cred()
 tearDown()
-
+'''
 ###################################################_END_OF_METHODS_###################################################
 
